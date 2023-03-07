@@ -1,31 +1,31 @@
 package techcourse.jcf.mission;
 
-public class JudeArrayList implements SimpleList {
+public class JudeArrayList<T> implements SimpleList<T> {
 
     private int size;
     private int realSize = 10;
-    private String[] array;
+    private Object[] array;
 
     public JudeArrayList() {
-        this.array = new String[realSize];
+        this.array = new Object[realSize];
         this.size = 0;
     }
 
     @Override
-    public boolean add(String value) {
+    public boolean add(T value) {
         array = resizeArray();
         array[size++] = value;
         return true;
     }
 
     @Override
-    public void add(int index, String value) {
+    public void add(int index, T value) {
         if (index >= size) {
             throw new IndexOutOfBoundsException();
         }
         array = resizeArray();
         size++;
-        String[] tmp = new String[realSize];
+        Object[] tmp = new Object[realSize];
         for (int i = 0; i < index; i++) {
             tmp[i] = array[i];
         }
@@ -39,22 +39,22 @@ public class JudeArrayList implements SimpleList {
     }
 
     @Override
-    public String set(int index, String value) {
-        String prev = array[index];
+    public T set(int index, T value) {
+        T prev = (T) array[index];
         array[index] = value;
         return prev;
     }
 
     @Override
-    public String get(int index) {
+    public T get(int index) {
         if (index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        return array[index];
+        return (T) array[index];
     }
 
     @Override
-    public boolean contains(String value) {
+    public boolean contains(T value) {
         for (int i = 0; i < size; i++) {
             if (value.equals(array[i])) {
                 return true;
@@ -64,7 +64,7 @@ public class JudeArrayList implements SimpleList {
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(T value) {
         for (int i = 0; i < size; i++) {
             if (array[i].equals(value)) {
                 return i;
@@ -84,8 +84,8 @@ public class JudeArrayList implements SimpleList {
     }
 
     @Override
-    public boolean remove(String value) {
-        String[] tmp = new String[realSize];
+    public boolean remove(T value) {
+        Object[] tmp = new Object[realSize];
         int j = 0;
         for (int i = 0; i < size; i++) {
             if (array[i].equals(value)) {
@@ -99,13 +99,13 @@ public class JudeArrayList implements SimpleList {
     }
 
     @Override
-    public String remove(int index) {
+    public T remove(int index) {
         int j = 0;
-        String[] tmp = new String[realSize];
-        String removed = "";
+        Object[] tmp = new Object[realSize];
+        T removed = null;
         for (int i = 0; i < size; i++) {
             if (i == index) {
-                removed = array[index];
+                removed = (T) array[index];
                 continue;
             }
             tmp[j++] = array[i];
@@ -117,15 +117,15 @@ public class JudeArrayList implements SimpleList {
 
     @Override
     public void clear() {
-        array = new String[10];
+        array = new Object[10];
         size = 0;
     }
 
-    private String[] resizeArray() {
+    private Object[] resizeArray() {
         if (size + 1 > array.length) {
-            String[] tmp = array;
+            Object[] tmp = array;
             realSize *= 2;
-            this.array = new String[realSize];
+            this.array = new Object[realSize];
             for (int i = 0; i < size; i++) {
                 array[i] = tmp[i];
             }

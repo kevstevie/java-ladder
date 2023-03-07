@@ -1,12 +1,12 @@
 package techcourse.jcf.mission;
 
-public class JudeLinkedList implements SimpleList{
+public class JudeLinkedList<T> implements SimpleList<T>{
 
-    class Node {
-        private String value;
-        private Node nextNode;
+    class Node<T> {
+        private T value;
+        private Node<T> nextNode;
 
-        public Node(String value) {
+        public Node(T value) {
             this.value = value;
         }
 
@@ -14,28 +14,28 @@ public class JudeLinkedList implements SimpleList{
         }
     }
 
-    private Node root;
+    private Node<T> root;
     private int size;
 
     public JudeLinkedList() {
-        this.root = new Node();
+        this.root = new Node<T>();
         this.size = 0;
     }
 
     @Override
-    public boolean add(String value) {
-        Node nodeNow = root;
+    public boolean add(T value) {
+        Node<T> nodeNow = root;
         while (nodeNow.nextNode != null) {
             nodeNow = nodeNow.nextNode;
         }
-        nodeNow.nextNode = new Node(value);
+        nodeNow.nextNode = new Node<T>(value);
         size++;
         return true;
     }
 
     @Override
-    public void add(int index, String value) {
-        Node nodeNow = root;
+    public void add(int index, T value) {
+        Node<T> nodeNow = root;
 
         if (index >= size) {
             throw new IndexOutOfBoundsException();
@@ -44,9 +44,9 @@ public class JudeLinkedList implements SimpleList{
         for (int i = 0; i < index; i++) {
             nodeNow = nodeNow.nextNode;
         }
-        Node next = nodeNow.nextNode;
+        Node<T> next = nodeNow.nextNode;
 
-        nodeNow.nextNode = new Node(value);
+        nodeNow.nextNode = new Node<T>(value);
         nodeNow.nextNode.nextNode = next;
 
         size++;
@@ -54,25 +54,25 @@ public class JudeLinkedList implements SimpleList{
     }
 
     @Override
-    public String set(int index, String value) { //1
-        Node nodeNow = root;
+    public T set(int index, T value) { //1
+        Node<T> nodeNow = root;
         if (index >= size) {
             throw new IndexOutOfBoundsException();
         }
         for (int i = 0; i < index; i++) {
             nodeNow = nodeNow.nextNode;// 0
         }
-        Node next = nodeNow.nextNode.nextNode; // 2
-        String val = nodeNow.nextNode.value; //0.val
-        nodeNow.nextNode = new Node(value); // 1
+        Node<T> next = nodeNow.nextNode.nextNode; // 2
+        T val = nodeNow.nextNode.value; //0.val
+        nodeNow.nextNode = new Node<T>(value); // 1
         nodeNow.nextNode.nextNode = next; // 2
 
         return val;
     }
 
     @Override
-    public String get(int index) {
-        Node nodeNow = root;
+    public T get(int index) {
+        Node<T> nodeNow = root;
         if (index >= size) {
             throw new IndexOutOfBoundsException();
         }
@@ -83,8 +83,8 @@ public class JudeLinkedList implements SimpleList{
     }
 
     @Override
-    public boolean contains(String value) {
-        Node now = root;
+    public boolean contains(T value) {
+        Node<T> now = root;
         for (int i = 0; i < size; i++) {
             now = now.nextNode;
             if (now.value.equals(value)) {
@@ -95,7 +95,7 @@ public class JudeLinkedList implements SimpleList{
     }
 
     @Override
-    public int indexOf(String value) {
+    public int indexOf(T value) {
         var now = root;
         for (int i = 0; i < size; i++) {
             now = now.nextNode;
@@ -117,8 +117,8 @@ public class JudeLinkedList implements SimpleList{
     }
 
     @Override
-    public boolean remove(String value) {
-        Node now = root;
+    public boolean remove(T value) {
+        Node<T> now = root;
         for (int i = 0; i < size - 1; i++) {
             if (now.nextNode.value.equals(value)) {
                 var next = now.nextNode.nextNode;
@@ -132,8 +132,8 @@ public class JudeLinkedList implements SimpleList{
     }
 
     @Override
-    public String remove(int index) {
-        Node now = root;
+    public T remove(int index) {
+        Node<T> now = root;
         var prev = root;
         var next = root;
         if (index >= size) {
@@ -152,20 +152,7 @@ public class JudeLinkedList implements SimpleList{
 
     @Override
     public void clear() {
-        root = new Node();
+        root = new Node<T>();
         size = 0;
-    }
-
-    @Override
-    public String toString() {
-        var now = root;
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = 0; i < size; i++) {
-            now = now.nextNode;
-            sb.append(now.value).append(" ");
-        }
-        sb.append("]");
-        return sb.toString();
     }
 }

@@ -1,26 +1,60 @@
 package techcourse.jcf.mission;
 
-public interface SimpleList {
+public interface SimpleList<T> {
 
-    boolean add(String value);
+    static <E> SimpleList<E> fromArrayToList(E[] arrays) {
+        JudeArrayList<E> list = new JudeArrayList<>();
+        for (Object array : arrays) {
+            list.add((E) array);
+        }
+        return list;
+    }
 
-    void add(int index, String value);
+    static <E extends Number> Double sum(SimpleList<E> simpleList) {
+        Double result = 0.0;
+        for (int i = 0; i < simpleList.size(); i++) {
+            result += simpleList.get(i).doubleValue();
+        }
+        return result;
+    }
 
-    String set(int index, String value);
+    static <E> SimpleList<E> filterNegative(SimpleList<? extends Number> simpleList) {
+        SimpleList<E> list = new JudeArrayList<>();
+        for (int i = 0; i < simpleList.size(); i++) {
+            if (simpleList.get(i).doubleValue() < 0) {
+                continue;
+            }
+            list.add((E) simpleList.get(i));
+        }
+        return list;
+    }
 
-    String get(int index);
+    static <E> void copy(SimpleList<? extends E> copy, SimpleList<? super E> origin) {
+        for (int i = 0; i < copy.size(); i++) {
+            origin.clear();
+            origin.add(copy.get(i));
+        }
+    }
 
-    boolean contains(String value);
+    boolean add(T value);
 
-    int indexOf(String value);
+    void add(int index, T value);
+
+    T set(int index, T value);
+
+    T get(int index);
+
+    boolean contains(T value);
+
+    int indexOf(T value);
 
     int size();
 
     boolean isEmpty();
 
-    boolean remove(String value);
+    boolean remove(T value);
 
-    String remove(int index);
+    T remove(int index);
 
     void clear();
 }
