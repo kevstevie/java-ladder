@@ -30,8 +30,8 @@ public interface SimpleList<T> {
     }
 
     static <E> void copy(SimpleList<? extends E> copy, SimpleList<? super E> origin) {
+        origin.clear();
         for (int i = 0; i < copy.size(); i++) {
-            origin.clear();
             origin.add(copy.get(i));
         }
     }
