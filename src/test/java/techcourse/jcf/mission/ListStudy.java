@@ -26,7 +26,7 @@ class ListStudy {
     }
     @Test
     public void judeArrayList() {
-        SimpleList values = new JudeArrayList();
+        SimpleList<String> values = new JudeArrayList<>();
 
         values.add("first");
         values.add("second");
@@ -61,7 +61,7 @@ class ListStudy {
     }
     @Test
     public void judeLinkedList() {
-        SimpleList values = new JudeLinkedList();
+        SimpleList<String> values = new JudeLinkedList<>();
 
         values.add("first");
         values.add("second");
