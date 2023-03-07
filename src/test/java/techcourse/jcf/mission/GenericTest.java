@@ -57,16 +57,30 @@ class GenericTest {
         //given
         SimpleList<Parent> parent = new JudeArrayList<>();
         SimpleList<Son> son = new JudeArrayList<>();
-        System.out.println(parent.size());
         //when
         son.add(new Son(3));
-        System.out.println(son.size());
         SimpleList.copy(son, parent);
-        System.out.println(parent.size());
         //then
         assertThat(parent.size()).isEqualTo(1);
         assertThat(parent.contains(new Son(3))).isTrue();
         assertThat(parent.contains(new Son(4))).isFalse();
+    }
+
+    @Test
+    @DisplayName("복사 원소 두개")
+    void copyTest2() {
+        //given
+        SimpleList<Parent> parent = new JudeArrayList<>();
+        SimpleList<Son> son = new JudeArrayList<>();
+
+        son.add(new Son(3));
+        son.add(new Son(4));
+        //when
+        SimpleList.copy(son, parent);
+        //then
+        assertThat(parent.size()).isEqualTo(2);
+        assertThat(parent.contains(new Son(3))).isTrue();
+        assertThat(parent.contains(new Son(4))).isTrue();
     }
     
     @Test
